@@ -1,0 +1,35 @@
+.topnav {
+    background-color: #333;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 14px 0;
+}
+
+.topnav a {
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    transition: background-color 0.3s ease;
+}
+
+.topnav a:hover {
+    background-color: #575757;
+    color: white;
+}
+
+.topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.topnav a:not(.link-end) {
+    margin-right: 16px;
+}
+
+.topnav .link-end {
+    margin-left: auto;
+    margin-right: 16px;
+}
