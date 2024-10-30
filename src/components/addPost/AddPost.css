@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 350px;
+    width: auto; /*Cambio para que el borde se adapte al tamaño de la descripcion*/
     margin-top: 50px;
     background-color: lightslategrey;
     padding: 15px;
@@ -32,8 +32,13 @@
         margin-right: auto;
 
         &:hover {
-            background-color: aquamarine;
+            background-color: rgb(65, 245, 65);
             transition: background-color 5s ease-out;
+        }
+
+        &:disabled{ /*Evita que el hover se aplique mientras el boton está desactivado*/
+            background-color: transparent;
+            transition: initial;
         }
     }
 

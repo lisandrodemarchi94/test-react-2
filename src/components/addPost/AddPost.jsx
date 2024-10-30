@@ -10,7 +10,7 @@ const AddPost = () => {
         descripcion: '',
     });
 
-    const isBtnDisabled = !(blog.autor && blog.titulo);
+    const isBtnDisabled = !(blog.autor && blog.titulo && blog.descripcion); /*Cambio para pedir que tambien se ingrese la descripcion*/
 
     const handleChange = (event, type) => {
         setBlog((prevState) => {
