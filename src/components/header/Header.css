@@ -1,10 +1,10 @@
 .topnav {
   height: 5vh;
-  background-color: #333;
+  background-color: lightslategrey;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 14px 0;
+  padding: 14px;
 }
 
 .topnav a {
@@ -26,11 +26,6 @@
   color: white;
 }
 
-.topnav a:not(.link-end) {
-  margin-right: 16px;
-}
-
 .topnav .link-end {
   margin-left: auto;
-  margin-right: 16px;
 }

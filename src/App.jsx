@@ -13,16 +13,18 @@ import "./App.css";
 function App() {
   return (
     <BrowserRouter>
-      <Header isLogged={true} />
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/new-post" element={<AddPost />} />
-          {/* <Route path="/about" element={<About />} />
+      <div className="container">
+        <Header isLogged={true} />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new-post" element={<AddPost />} />
+            {/* <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} /> */}
-        </Routes>
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </BrowserRouter>
   )
 }
