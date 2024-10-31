@@ -1,40 +1,62 @@
 .form-blog {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 350px;
-    margin-top: 50px;
-    background-color: lightslategrey;
-    padding: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 350px;
+  margin: 50px 0;
+  background-color: lightslategrey;
+  padding: 15px;
+  border-radius: 10px;
+
+  .label-blog {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-family: "Courier New", Courier, monospace;
+    color: white;
+  }
+
+  .input-blog {
     border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 0;
 
-    .label-blog {
-        font-size: 18px;
-        margin-bottom: 8px;
-        font-family: 'Courier New', Courier, monospace;
-        color: white;
+    &:focus {
+      outline: none;
     }
-    
-    .input-blog {
-        border-radius: 10px;
-        padding: 10px;
-        margin-bottom: 16px;
+  }
 
-        &:focus-visible {
-            border: 0;
-        }
+  .react-datepicker__input-container .input-blog {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .input-blog.text-area-blog {
+    resize: vertical;
+    max-height: 200px;
+  }
+
+  .image-preview-container {
+    text-align: center;
+  }
+
+  .image-preview {
+    width: 200px;
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-blog {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px auto;
+
+    &:hover:enabled {
+      background-color: aquamarine;
+      transition: background-color 5s ease-out;
     }
-    
-    .btn-blog {
-        border-radius: 10px;
-        padding: 10px;
-        margin-left: auto;
-        margin-right: auto;
-
-        &:hover {
-            background-color: aquamarine;
-            transition: background-color 5s ease-out;
-        }
-    }
-
+  }
 }
