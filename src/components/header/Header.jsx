@@ -9,8 +9,8 @@ const Header = ({ isLogged }) => {
   ];
 
   const loggedLinks = [
-    { to: "/new-post", label: "Nuevo Blog", className: "link-end" },
-    { to: "/logout", label: "Cerrar sesión", className: "link-end" },
+    { to: "/new-post", label: "Nuevo Blog" },
+    { to: "/logout", label: "Cerrar sesión" },
   ];
 
   return (
@@ -19,23 +19,21 @@ const Header = ({ isLogged }) => {
         <NavLink
           key={link.to}
           to={link.to}
-          className={({ isActive }) => (isActive ? "active" : "")}
         >
           {link.label}
         </NavLink>
       ))}
-      {isLogged &&
-        loggedLinks.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            className={({ isActive }) =>
-              `${link.className} ${isActive ? "active" : ""}`
-            }
-          >
-            {link.label}
-          </NavLink>
-        ))}
+      <div className={'link-end'}>
+        {isLogged &&
+          loggedLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+      </div>
     </nav>
   );
 };

@@ -1,4 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .content {
-  overflow-y: scroll;
   height: 90vh;
+  overflow-y: scroll;
 }

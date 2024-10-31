@@ -1,62 +1,69 @@
-.form-blog {
+.form-container {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  width: 350px;
-  margin: 50px 0;
-  background-color: lightslategrey;
-  padding: 15px;
-  border-radius: 10px;
+  align-items: center;
+  min-height: 100%;
 
-  .label-blog {
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 8px;
-    font-family: "Courier New", Courier, monospace;
-    color: white;
-  }
-
-  .input-blog {
+  .form-blog {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 350px;
+    background-color: lightslategrey;
+    padding: 15px;
     border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 16px;
-    border: 0;
+    margin: 20px 0;
 
-    &:focus {
-      outline: none;
+    .label-blog {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 8px;
+      font-family: "Courier New", Courier, monospace;
+      color: white;
     }
-  }
 
-  .react-datepicker__input-container .input-blog {
-    box-sizing: border-box;
-    width: 100%;
-  }
+    .input-blog {
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: 0;
 
-  .input-blog.text-area-blog {
-    resize: vertical;
-    max-height: 200px;
-  }
+      &:focus {
+        outline: none;
+      }
+    }
 
-  .image-preview-container {
-    text-align: center;
-  }
+    .react-datepicker__input-container .input-blog {
+      box-sizing: border-box;
+      width: 100%;
+    }
 
-  .image-preview {
-    width: 200px;
-    height: auto;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  }
+    .input-blog.text-area-blog {
+      resize: vertical;
+      max-height: 200px;
+    }
 
-  .btn-blog {
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px auto;
+    .image-preview-container {
+      text-align: center;
+    }
 
-    &:hover:enabled {
-      background-color: aquamarine;
-      transition: background-color 5s ease-out;
+    .image-preview {
+      width: 200px;
+      height: auto;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-blog {
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px auto;
+
+      &:hover:enabled {
+        background-color: aquamarine;
+        transition: background-color 5s ease-out;
+      }
     }
   }
 }
