@@ -3,18 +3,21 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./AddPost.css";
+import { useCreateBlog } from "../../hooks/useCreateBlog";
 
 const AddPost = () => {
 
     const [blog, setBlog] = useState({
-        autor: '',
-        titulo: '',
-        descripcion: '',
+        author: '',
+        title: '',
+        description: '',
         date: new Date(),
         urlToImage: '',
     });
 
-    const isBtnDisabled = !(blog.autor && blog.titulo);
+    const { createBlog } = useCreateBlog();
+
+    const isBtnDisabled = !(blog.author && blog.title);
 
     const handleChange = (value, type) => {
         setBlog((prevState) => {
@@ -46,8 +49,9 @@ const AddPost = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        if (blog.autor && blog.titulo) {
-            console.log('handleSubmit')
+        if (blog.author && blog.title) {
+            console.log('handleSubmit');
+            createBlog(blog);
         };
     };
 
@@ -59,7 +63,7 @@ const AddPost = () => {
                     className="input-blog"
                     type="text"
                     value={blog.autor}
-                    onChange={(event) => handleChange(event.target.value, 'autor')}
+                    onChange={(event) => handleChange(event.target.value, 'author')}
                     placeholder="Ingrese nombre de autor"
                 />
                 <label htmlFor="" className="label-blog">Titulo</label>
@@ -67,7 +71,7 @@ const AddPost = () => {
                     className="input-blog"
                     type="text"
                     value={blog.titulo}
-                    onChange={(event) => handleChange(event.target.value, 'titulo')}
+                    onChange={(event) => handleChange(event.target.value, 'title')}
                     placeholder="Ingrese titulo"
                 />
                 <label htmlFor="" className="label-blog">Fecha de publicación</label>
@@ -81,7 +85,7 @@ const AddPost = () => {
                 <textarea
                     className="input-blog text-area-blog"
                     value={blog.descripcion}
-                    onChange={(event) => handleChange(event.target.value, 'descripcion')}
+                    onChange={(event) => handleChange(event.target.value, 'description')}
                     placeholder="Ingrese descripción"
                 />
                 <label className="label-blog">
