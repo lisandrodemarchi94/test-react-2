@@ -23,13 +23,14 @@ const Home = () => {
         return <p>Error al cargar noticias: {error}</p>;
     }
 
+    // TODO: change article for blog
     return (
         <div className="news-list">
             {articles.length ? (
                 articles.map((article, index) => (
                     <div className="news-item" key={index}>
                         <h2>{article.title}</h2>
-                        <p><strong>Fuente:</strong> {article.source.name}</p>
+                        <p><strong>Fuente:</strong> {article.title}</p>
                         <p><strong>Autor:</strong> {article.author || "Desconocido"}</p>
                         <p>{article.description}</p>
                         <img src={article.urlToImage} alt={article.title} className="news-image" />
@@ -47,7 +48,7 @@ const Home = () => {
                     <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
                         Anterior
                     </button>
-                    <span>Página {page}</span>
+                    <p>Página {page}</p>
                     <button onClick={() => setPage((prev) => prev + 1)} disabled={articles.length < pageSize}>
                         Siguiente
                     </button>
