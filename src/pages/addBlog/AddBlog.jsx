@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import ConfirmModal from "../../components/confirmModal/ConfirmModal";
-import useCreateBlog from "../../hooks/useCreateBlog";
+import { useCreateBlog } from "../../hooks";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "./AddPost.css";
+import "./AddBlog.css";
 
 const initBlogValue = {
     author: '',
@@ -14,7 +14,7 @@ const initBlogValue = {
     urlToImage: '',
 };
 
-const AddPost = () => {
+const AddBlog = () => {
 
     const [blog, setBlog] = useState(initBlogValue);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +24,7 @@ const AddPost = () => {
     useEffect(() => {
         if (loading) return;
         if (error) {
+            // Todo: agregar pantalla de error
             console.log('Ocurrio un error');
         };
         if (response) {
@@ -57,23 +58,13 @@ const AddPost = () => {
         }
     };
 
-    // const handleChangeAutor = (event) => {
-    //     setBlog({
-    //         autor: event.target.value,
-    //     });
-    // };
-
-    const handleConfirm = () => {
-        console.log({ blog })
-        createNewBlog(blog);
-    };
+    const handleConfirm = () => createNewBlog(blog);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log(blog)
+
         if (blog.author && blog.title) {
-            console.log('handleSubmit');
             setIsModalOpen(true);
         };
     };
@@ -155,4 +146,4 @@ const AddPost = () => {
     );
 };
 
-export default AddPost;
+export default AddBlog;
