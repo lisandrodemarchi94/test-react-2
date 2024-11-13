@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import ConfirmModal from "../confirmModal/ConfirmModal";
+import ConfirmModal from "../../components/confirmModal/ConfirmModal";
 import useCreateBlog from "../../hooks/useCreateBlog";
 
 import "react-datepicker/dist/react-datepicker.css";
