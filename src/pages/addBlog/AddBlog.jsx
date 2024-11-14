@@ -1,40 +1,50 @@
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import ConfirmModal from "../../components/confirmModal/ConfirmModal";
-import useCreateBlog from "../../hooks/useCreateBlog";
+import { useCreateBlog } from "../../hooks";
 
 import "react-datepicker/dist/react-datepicker.css";
-import "./AddPost.css";
+import "./AddBlog.css";
 
 const initBlogValue = {
     author: '',
     title: '',
     description: '',
-    date: new Date(),
+    createdDate: new Date(),
+    image: '',
     urlToImage: '',
 };
 
-const AddPost = () => {
+const AddBlog = () => {
 
     const [blog, setBlog] = useState(initBlogValue);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { createNewBlog, error, loading, response } = useCreateBlog();
+    const { createBlog, cleanError, error, loading, response } = useCreateBlog();
 
     useEffect(() => {
         if (loading) return;
-        if (error) {
-            console.log('Ocurrio un error');
-        };
-        if (response) {
+        if (!error && response?.data) {
             handleCloseModal();
             setBlog(initBlogValue);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error, loading, response]);
+
+    // useEffect(() => {
+    //     return () => {
+    //         if (blog.urlToImage) {
+    //             URL.revokeObjectURL(blog.urlToImage);
+    //         }
+    //     };
+    // }, [blog.urlToImage]);
 
     const isBtnDisabled = !(blog.author && blog.title && blog.description);
 
-    const handleCloseModal = () => setIsModalOpen(false);
+    const handleCloseModal = () => {
+        cleanError();
+        setIsModalOpen(false)
+    }
 
     const handleChange = (value, type) => {
         setBlog((prevState) => {
@@ -47,33 +57,33 @@ const AddPost = () => {
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
-        if (file) {
-            setBlog((prevState) => {
-                return {
-                    ...prevState,
-                    urlToImage: file,
-                };
-            });
+        setBlog((prevState) => {
+            return {
+                ...prevState,
+                image: file || null,
+                urlToImage: file ? URL.createObjectURL(file) : null,
+            };
+        });
+    };
+
+    const handleClearImage = () => {
+        if (blog.urlToImage) {
+            URL.revokeObjectURL(blog.urlToImage);
         }
+        setBlog((prevState) => ({
+            ...prevState,
+            image: null,
+            urlToImage: null,
+        }));
     };
 
-    // const handleChangeAutor = (event) => {
-    //     setBlog({
-    //         autor: event.target.value,
-    //     });
-    // };
-
-    const handleConfirm = () => {
-        console.log({ blog })
-        createNewBlog(blog);
-    };
+    const handleConfirm = () => createBlog(blog);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log(blog)
+
         if (blog.author && blog.title) {
-            console.log('handleSubmit');
             setIsModalOpen(true);
         };
     };
@@ -101,7 +111,7 @@ const AddPost = () => {
                     <label htmlFor="" className="label-blog">Fecha de publicación</label>
                     <DatePicker
                         className="input-blog"
-                        selected={blog.date}
+                        selected={blog.createdDate}
                         onChange={(date) => handleChange(date, 'date')}
                         dateFormat={'dd/MM/YYYY'}
                     />
@@ -121,7 +131,16 @@ const AddPost = () => {
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
+                        value={blog.image || ''}
                     />
+                    {blog.urlToImage && (
+                        <button
+                            className="clear-image-button"
+                            onClick={handleClearImage}
+                        >
+                            ✕
+                        </button>
+                    )}
                     {blog.urlToImage && (
                         <div className="image-preview-container">
                             <p className="label-blog">Vista previa de la imagen:</p>
@@ -129,8 +148,6 @@ const AddPost = () => {
                                 className="image-preview"
                                 src={blog.urlToImage}
                                 alt="Vista previa"
-                                // TODO: fix style inline
-                                style={{ width: '200px', height: 'auto', marginTop: '10px' }}
                             />
                         </div>
                     )}
@@ -146,6 +163,8 @@ const AddPost = () => {
             {isModalOpen && (
                 <ConfirmModal
                     isOpen={isModalOpen}
+                    errorMsg={error && 'Ocurrió un error al crear el blog.'}
+                    loading={loading}
                     onClose={handleCloseModal}
                     onConfirm={handleConfirm}
                     message="¿Estás seguro que desea crear un blog?"
@@ -155,4 +174,4 @@ const AddPost = () => {
     );
 };
 
-export default AddPost;
+export default AddBlog;
