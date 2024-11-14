@@ -11,10 +11,10 @@ export const useCreateBlog = () => {
         loading: false,
     });
 
-    const createBlog = async ({ author, date, description, title }) => {
+    const createBlog = async ({ author, createdDate, description, title }) => {
         const blog = {
             author,
-            date,
+            createdDate: createdDate.toISOString(),
             description,
             title,
         };
@@ -22,14 +22,14 @@ export const useCreateBlog = () => {
         try {
             setCreateBlogState({
                 data: null,
-                error: false,
+                error: null,
                 loading: true,
             });
             const response = await axios.post(blogUrl, blog);
             if (response.data) {
                 setCreateBlogState({
                     data: response.data,
-                    error: false,
+                    error: null,
                     loading: false,
                 });
             } else {
@@ -42,14 +42,22 @@ export const useCreateBlog = () => {
         } catch (error) {
             setCreateBlogState({
                 data: null,
-                error: error,
+                error: error.message,
                 loading: false,
             });
         }
     };
 
+    const cleanError = () => {
+        setCreateBlogState(prevState => ({
+            ...prevState,
+            error: null,
+        }));
+    };
+
     return {
         createBlog,
+        cleanError,
         data: createBlogState.data,
         error: createBlogState.error,
         loading: createBlogState.loading,

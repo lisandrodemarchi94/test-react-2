@@ -1,6 +1,7 @@
 // import { useEffect, useState } from "react";
 import { useEffect } from "react";
 import { useGetBlogs } from "../../hooks";
+import { format } from "date-fns";
 
 import "./Home.css";
 
@@ -19,7 +20,7 @@ const Home = () => {
     }
 
     if (error) {
-        return <p>Error al cargar noticias: {error}</p>;
+        return <p>Error al cargar noticias: {error.message}</p>;
     }
 
     return (
@@ -29,7 +30,7 @@ const Home = () => {
                     <div className="news-item" key={index}>
                         <h2>{blog.title}</h2>
                         <p><strong>Autor:</strong> {blog.author || "Desconocido"}</p>
-                        <p>Fecha de creación: {blog.createdDate}</p>
+                        <p>Fecha de creación: {format(new Date(blog.createdDate), 'dd/MM/yyyy')}</p>
                         <p>{blog.description}</p>
                         <img src={blog.urlToImage} alt={blog.title} className="news-image" />
                     </div>

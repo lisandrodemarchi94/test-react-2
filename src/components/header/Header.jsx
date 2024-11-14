@@ -5,7 +5,7 @@ import "./Header.css";
 const Header = ({ isLogged }) => {
   const links = [
     { to: "/", label: "Inicio" },
-    { to: "/my-blogs", label: "Mis Blogs" },
+    { to: "/authors", label: "Autores" },
   ];
 
   const loggedLinks = [

@@ -3,9 +3,10 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { AddBlog, Home } from './pages';
+import { AddBlog, AuthorsPage, Home } from './pages';
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import NotFoundPage from "./pages/NotFoundPage";
 
 import "./App.css";
 
@@ -17,9 +18,10 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/new-post" element={<AddBlog />} />
-            {/* <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} /> */}
+            <Route path="/new-blog" element={<AddBlog />} />
+            <Route path="/authors" element={<AuthorsPage />} />
+
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
         <Footer />
