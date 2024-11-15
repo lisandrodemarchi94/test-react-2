@@ -5,11 +5,11 @@ import "./Header.css";
 const Header = ({ isLogged }) => {
   const links = [
     { to: "/", label: "Inicio" },
-    { to: "/my-blogs", label: "Mis Blogs" },
+    { to: "/authors", label: "Autores" },
   ];
 
   const loggedLinks = [
-    { to: "/new-post", label: "Nuevo Blog" },
+    { to: "/new-blog", label: "Nuevo Blog" },
     { to: "/logout", label: "Cerrar sesión" },
   ];
 
