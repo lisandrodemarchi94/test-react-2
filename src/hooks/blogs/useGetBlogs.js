@@ -1,7 +1,5 @@
 import { useCallback, useState } from "react";
-import axios from "axios";
-
-const blogUrl = import.meta.env.VITE_BLOGS_API_URL;
+import axios from "../../config/axiosConfig";
 
 export const useGetBlogs = () => {
   const [blogState, setBlogState] = useState({
@@ -17,7 +15,7 @@ export const useGetBlogs = () => {
         error: false,
         loading: true,
       });
-      const response = await axios.get(blogUrl);
+      const response = await axios.get("blogs");
       if (response.status === 200) {
         setBlogState({
           data: response.data,
