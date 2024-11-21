@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useGetBlogs } from "../../hooks";
 import { format } from "date-fns";
 
-import "./Home.css";
+import "./BlogsPage.css";
 
-const Home = () => {
+const BlogsPage = () => {
     // const [page, setPage] = useState(1);
     // const [pageSize] = useState(5);
 
@@ -26,15 +26,18 @@ const Home = () => {
     return (
         <div className="news-list">
             {blogs.length ? (
-                blogs.map((blog, index) => (
-                    <div className="news-item" key={index}>
-                        <h2>{blog.title}</h2>
-                        <p><strong>Autor:</strong> {blog.author || "Desconocido"}</p>
-                        <p>Fecha de creación: {format(new Date(blog.createdDate), 'dd/MM/yyyy')}</p>
-                        <p>{blog.description}</p>
-                        <img src={blog.urlToImage} alt={blog.title} className="news-image" />
-                    </div>
-                ))
+                blogs.map((blog, index) => {
+                    const createdDate = blog.createdDate ? format(new Date(blog.createdDate), 'dd/MM/yyyy') : '-';
+                    return (
+                        <div className="news-item" key={index}>
+                            <h2>{blog.title}</h2>
+                            <p><strong>Autor:</strong> {blog.author || "Desconocido"}</p>
+                            <p>Fecha de creación: {createdDate}</p>
+                            <p>{blog.description}</p>
+                            <img src={blog.urlToImage} alt={blog.title} className="news-image" />
+                        </div>
+                    );
+                })
             ) : (
                 <h3>No se encontraron resultados</h3>
             )}
@@ -54,4 +57,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default BlogsPage;
