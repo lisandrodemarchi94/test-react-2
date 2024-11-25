@@ -1,16 +1,15 @@
 import { NavLink } from "react-router-dom";
+import ROUTES from "../../consts/routes";
 
 import "./Header.css";
 
-const Header = ({ isLogged }) => {
-  const links = [
-    { to: "/", label: "Inicio" },
-    { to: "/authors", label: "Autores" },
-  ];
+const { ADD_BLOG, AUTHORS, HOME, LOGOUT } = ROUTES;
 
-  const loggedLinks = [
-    { to: "/new-post", label: "Nuevo Blog" },
-    { to: "/logout", label: "Cerrar sesión" },
+const Header = () => {
+  const links = [
+    { to: HOME, label: "Inicio" },
+    { to: AUTHORS, label: "Autores" },
+    { to: ADD_BLOG, label: "Nuevo Blog" },
   ];
 
   return (
@@ -24,15 +23,11 @@ const Header = ({ isLogged }) => {
         </NavLink>
       ))}
       <div className={'link-end'}>
-        {isLogged &&
-          loggedLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+        <NavLink
+          to={LOGOUT}
+        >
+          Cerrar sesión
+        </NavLink>
       </div>
     </nav>
   );

@@ -26,15 +26,21 @@ const Home = () => {
     return (
         <div className="news-list">
             {blogs.length ? (
-                blogs.map((blog, index) => (
-                    <div className="news-item" key={index}>
-                        <h2>{blog.title}</h2>
-                        <p><strong>Autor:</strong> {blog.author || "Desconocido"}</p>
-                        <p>Fecha de creación: {format(new Date(blog.createdDate), 'dd/MM/yyyy')}</p>
-                        <p>{blog.description}</p>
-                        <img src={blog.urlToImage} alt={blog.title} className="news-image" />
-                    </div>
-                ))
+                blogs.map((blog, index) => {
+                    console.log(blog.createdDate)
+                    const date = blog?.createdDate
+                        ? format(new Date(blog.createdDate), 'dd/MM/yyyy')
+                        : '-';
+                    return (
+                        <div className="news-item" key={index}>
+                            <h2>{blog.title}</h2>
+                            <p><strong>Autor:</strong> {blog.author || "Desconocido"}</p>
+                            <p>Fecha de creación: {date}</p>
+                            <p>{blog.description}</p>
+                            <img src={blog.urlToImage} alt={blog.title} className="news-image" />
+                        </div>
+                    );
+                })
             ) : (
                 <h3>No se encontraron resultados</h3>
             )}
