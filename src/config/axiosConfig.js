@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 // Interceptor para agregar el token automáticamente
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -19,15 +19,51 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Manejo global de errores de respuesta
+const renewAccessToken = async () => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/refresh`, null, {
+      withCredentials: true, // Enviar cookies httpOnly si las usas
+    });
+    const { accessToken } = response.data;
+    localStorage.setItem("accessToken", accessToken);
+    return accessToken;
+  } catch (error) {
+    console.error("Error al renovar el Access Token:", error);
+    throw error;
+  }
+};
+
+// Interceptor para manejar respuestas
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response && error.response.status === 401) {
-      console.error("Token inválido o expirado");
-      localStorage.removeItem("token");
-      window.location.href = "/login";
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry // Asegurarte de no entrar en bucles infinitos
+    ) {
+      originalRequest._retry = true; // Marcar la solicitud como reintentada
+
+      try {
+        const newAccessToken = await renewAccessToken();
+
+        axiosInstance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+
+        // Reintentar la solicitud original
+        return axiosInstance(originalRequest);
+      } catch (renewError) {
+        localStorage.removeItem("accessToken");
+        window.location.href = "/login";
+        return Promise.reject(renewError);
+      }
     }
+
+    // Rechazar cualquier otro error
     return Promise.reject(error);
   }
 );

@@ -39,7 +39,7 @@ input[type="password"]:focus {
   outline: none;
 }
 
-button {
+.login-btn {
   width: 100%;
   padding: 10px;
   background-color: #007bff;

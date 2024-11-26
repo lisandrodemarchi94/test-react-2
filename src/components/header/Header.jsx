@@ -12,7 +12,6 @@ const Header = () => {
     { to: BLOGS, label: "Blogs" },
     { to: AUTHORS, label: "Autores" },
     { to: ADD_BLOG, label: "Nuevo Blog" },
-    { to: LOGOUT, label: "Cerrar sesión", style: "link-end" },
   ];
 
   return (
@@ -25,6 +24,13 @@ const Header = () => {
           {link.label}
         </NavLink>
       ))}
+      <div className={'link-end'}>
+        <NavLink
+          to={LOGOUT}
+        >
+          Cerrar sesión
+        </NavLink>
+      </div>
     </nav>
   );
 };
