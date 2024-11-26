@@ -18,7 +18,9 @@ import BlogsPage from "./pages/blogs/BlogsPage";
 import ROUTES from "./consts/routes";
 import LogoutPage from "./pages/logout/LogoutPage";
 import { AuthProvider } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
 
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 
 const { ADD_BLOG, AUTHORS, BLOGS, HOME, LOGIN, UNAUTHORIZED, NOT_FOUND, LOGOUT } = ROUTES;
@@ -28,6 +30,11 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <AppContent />
+        <ToastContainer
+          autoClose={4000}
+          position="bottom-right"
+          closeButton={false}
+        />
       </BrowserRouter>
     </AuthProvider>
   );

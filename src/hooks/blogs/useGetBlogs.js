@@ -1,24 +1,28 @@
 import { useCallback, useState } from "react";
-import axios from "../../config/axiosConfig";
+import axiosInstance from "../../config/axiosConfig";
+import { buildURLWithFilters } from "../../utils";
 
 export const useGetBlogs = () => {
   const [blogState, setBlogState] = useState({
     data: [],
+    metaData: null,
     error: null,
     loading: false,
   });
 
-  const getAllBlogs = useCallback(async () => {
+  const getAllBlogs = useCallback(async (filters) => {
+    const blogsURLWithFilters = buildURLWithFilters("/blogs", filters);
     try {
       setBlogState({
         data: null,
         error: false,
         loading: true,
       });
-      const response = await axios.get("blogs");
+      const response = await axiosInstance.get(blogsURLWithFilters);
       if (response.status === 200) {
         setBlogState({
-          data: response.data,
+          data: response.data.data,
+          metaData: response.data.meta,
           error: false,
           loading: false,
         });
@@ -43,5 +47,6 @@ export const useGetBlogs = () => {
     data: blogState.data,
     error: blogState.error,
     loading: blogState.loading,
+    metaData: blogState?.metaData,
   };
 };

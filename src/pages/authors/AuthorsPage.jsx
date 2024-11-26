@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useGetAuthors } from "../../hooks/authors/useGetAuthors";
 import { format } from "date-fns";
 import ConfirmModal from "../../components/confirmModal/ConfirmModal";
+import { useDeleteAuthor } from "../../hooks/authors/useDeleteAuthor";
+import { toast } from "react-toastify";
 
 import './AuthorsPage.css';
 
@@ -16,20 +19,41 @@ const ActionsComponent = ({ onEdit, onDelete }) => {
 
 const AuthorsPage = () => {
 
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [deleteModalState, setDeleteModalState] = useState({
+        show: false,
+        authorId: null,
+        blogsCount: 0,
+    });
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     const { data, error, getAuthors, loading } = useGetAuthors();
+    const { deleteAuthor, deleteAuthorError, deleteAuthorLoading, deleteAuthorSuccess } = useDeleteAuthor();
+
+    const deleteAuthorMessage = deleteModalState?.blogsCount > 0
+        ? 'El autor que desea eliminar posee blogs. Al eliminarlo, estos tambien se borraran. ¿Desea continuar?'
+        : 'Esta a punto de eliminar un autor. ¿Desea continuar?';
 
     useEffect(() => {
         getAuthors();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleDeleteAuthor = () => {
-        // TODO: elimiar el autor integardo con el back
-        setIsDeleteModalOpen(false);
-    };
+    useEffect(() => {
+        if (deleteAuthorLoading) return;
+        if (deleteAuthorError) {
+            toast.error("Ócurrio un error al eliminar el autor.");
+        }
+        if (deleteAuthorSuccess) {
+            setDeleteModalState({
+                show: false,
+                authorId: null,
+                blogsCount: 0,
+            });
+            toast.success("Se eliminó con éxito el autor.");
+            getAuthors();
+        }
+    }, [deleteAuthorError, deleteAuthorLoading, deleteAuthorSuccess]);
+
+    const handleDeleteAuthor = () => deleteAuthor(deleteModalState.authorId);
 
     const handleEditAuthor = () => {
         setIsEditModalOpen(true);
@@ -62,17 +86,28 @@ const AuthorsPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data?.map((author) => {
+                        {data?.length === 0 && (
+                            <tr className="empty-row">
+                                <td colSpan={6}>
+                                    No se encontraron autores.
+                                </td>
+                            </tr>
+                        )}
+                        {data?.length > 0 && data?.map((author) => {
                             return (
-                                <tr key={author.id}>
+                                <tr key={author._id}>
                                     <td>{author.name}</td>
                                     <td>{author.email}</td>
                                     <td className="td-center-text">{format(author.birthDate, 'dd/MM/yyyy')}</td>
-                                    <td className="td-center-text">{author.blogsNumber}</td>
+                                    <td className="td-center-text">{author.blogsCount}</td>
                                     <td className="td-center-text">{format(author.createdDate, 'dd/MM/yyyy')}</td>
                                     <td>
                                         <ActionsComponent
-                                            onDelete={() => setIsDeleteModalOpen(true)}
+                                            onDelete={() => setDeleteModalState({
+                                                show: true,
+                                                authorId: author._id,
+                                                blogsCount: author.blogsCount
+                                            })}
                                             onEdit={handleEditAuthor}
                                         />
                                     </td>
@@ -85,13 +120,13 @@ const AuthorsPage = () => {
             {isEditModalOpen && (
                 <></>
             )}
-            {isDeleteModalOpen && (
+            {deleteModalState.show && (
                 <ConfirmModal
                     errorMsg={''}
-                    isOpen={isDeleteModalOpen}
+                    isOpen={deleteModalState.show}
                     loading={false}
-                    message={'Esta a punto de eliminar el autor. ¿Desea continuar?'}
-                    onClose={() => setIsDeleteModalOpen(false)}
+                    message={deleteAuthorMessage}
+                    onClose={() => setDeleteModalState(false)}
                     onConfirm={handleDeleteAuthor}
                 />
             )}

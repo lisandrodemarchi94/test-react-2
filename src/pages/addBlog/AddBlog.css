@@ -16,7 +16,7 @@
 
     .label-blog {
       font-weight: bold;
-      font-size: 18px;
+      font-size: 16px;
       margin-bottom: 8px;
       font-family: "Courier New", Courier, monospace;
       color: white;
@@ -45,6 +45,9 @@
 
     .image-preview-container {
       text-align: center;
+      position: relative;
+      display: inline-block;
+      overflow: hidden; /* Para asegurarte de que los hijos no se desborden */
     }
 
     .image-preview {
@@ -54,6 +57,31 @@
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       margin-top: "10px";
+      object-fit: cover;
+      transition: opacity 0.3s ease; /* Suaviza el efecto de opacidad */
+    }
+
+    .image-preview-container:hover .image-preview {
+      opacity: 0.4; /* Hace que la imagen se opaque */
+      cursor: pointer;
+    }
+
+    .image-preview-container::before {
+      content: "✕"; /* La X para indicar eliminación */
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem; /* Tamaño de la X */
+      color: white; /* Color de la X */
+      opacity: 0; /* Inicialmente invisible */
+      transition: opacity 0.3s ease; /* Suaviza la aparición de la X */
+      pointer-events: none; /* Asegura que no interfiera con el hover */
+    }
+
+    .image-preview-container:hover::before {
+      opacity: 1; /* Muestra la X al hacer hover */
+      pointer-events: auto; /* Ahora puede detectar clicks si es necesario */
     }
 
     .btn-blog {
@@ -65,6 +93,14 @@
         background-color: aquamarine;
         transition: background-color 5s ease-out;
       }
+    }
+
+    .error-text {
+      color: #5a0a08;
+      text-align: center;
+      font-size: 12px;
+      margin: 0;
+      font-weight: bold;
     }
   }
 }
