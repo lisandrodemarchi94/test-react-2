@@ -64,7 +64,7 @@ const AuthorsPage = () => {
                     <tbody>
                         {data?.map((author) => {
                             return (
-                                <tr key={author.id}>
+                                <tr key={author._id}>
                                     <td>{author.name}</td>
                                     <td>{author.email}</td>
                                     <td className="td-center-text">{format(author.birthDate, 'dd/MM/yyyy')}</td>
