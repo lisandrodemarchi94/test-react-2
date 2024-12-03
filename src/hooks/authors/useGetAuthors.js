@@ -1,8 +1,5 @@
-// import axios from "axios";
 import { useState } from "react";
-import { authorsMock } from "../../mocks/authorsMock";
-
-// const authorsApiUrl = import.meta.env.VITE_AUTHORS_API_URL;
+import axiosInstance from "../../config/axiosConfig";
 
 export const useGetAuthors = () => {
   const [getAuthorsState, setGetAuthorsState] = useState({
@@ -18,28 +15,20 @@ export const useGetAuthors = () => {
       loading: true,
     });
     try {
-      setTimeout(() => {
+      const response = await axiosInstance.get("/authors");
+      if (response.status === 200) {
         setGetAuthorsState({
-          data: authorsMock,
+          data: response.data,
           error: null,
           loading: false,
         });
-      }, 2000);
-
-      //   const response = await axios.get(authorsApiUrl);
-      //   if (response.status === 200) {
-      //     setGetAuthorsState({
-      //       data: response.data,
-      //       error: null,
-      //       loading: false,
-      //     });
-      //   } else {
-      //     setGetAuthorsState({
-      //       data: [],
-      //       error: "Error",
-      //       loading: false,
-      //     });
-      //   }
+      } else {
+        setGetAuthorsState({
+          data: [],
+          error: true,
+          loading: false,
+        });
+      }
     } catch (error) {
       setGetAuthorsState({
         data: [],

@@ -45,6 +45,9 @@
 
     .image-preview-container {
       text-align: center;
+      position: relative;
+      display: inline-block;
+      overflow: hidden; /* Para asegurarte de que los hijos no se desborden */
     }
 
     .image-preview {
@@ -54,6 +57,31 @@
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       margin-top: "10px";
+      object-fit: cover;
+      transition: opacity 0.3s ease; /* Suaviza el efecto de opacidad */
+    }
+
+    .image-preview-container:hover .image-preview {
+      opacity: 0.4;
+      cursor: pointer;
+    }
+
+    .image-preview-container::before {
+      content: "✕"; /* La X para indicar eliminación */
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: white;
+      opacity: 0; /* Inicialmente invisible */
+      transition: opacity 0.3s ease; /* Suaviza la aparición de la X */
+      pointer-events: none; /* Asegura que no interfiera con el hover */
+    }
+
+    .image-preview-container:hover::before {
+      opacity: 1; /* Muestra la X al hacer hover */
+      pointer-events: auto; /* Ahora puede detectar clicks si es necesario */
     }
 
     .btn-blog {

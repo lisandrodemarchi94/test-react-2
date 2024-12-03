@@ -1,7 +1,6 @@
-import axios from "axios";
-import { useState } from "react";
 
-const blogUrl = import.meta.env.VITE_BLOGS_API_URL;
+import { useState } from "react";
+import axiosInstance from "../../config/axiosConfig";
 
 export const useCreateBlog = () => {
 
@@ -11,13 +10,14 @@ export const useCreateBlog = () => {
         loading: false,
     });
 
-    const createBlog = async ({ author, createdDate, description, title }) => {
-        const blog = {
-            author,
-            createdDate: createdDate.toISOString(),
-            description,
-            title,
-        };
+    const createBlog = async ({ author, createdDate, description, image, title }) => {
+
+        const formData = new FormData();
+        formData.append("author", author);
+        formData.append("createdDate", createdDate.toISOString());
+        formData.append("description", description);
+        formData.append("title", title);
+        image && formData.append("image", image);
 
         try {
             setCreateBlogState({
@@ -25,7 +25,9 @@ export const useCreateBlog = () => {
                 error: null,
                 loading: true,
             });
-            const response = await axios.post(blogUrl, blog);
+            const response = await axiosInstance.post("/blogs", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
             if (response.data) {
                 setCreateBlogState({
                     data: response.data,

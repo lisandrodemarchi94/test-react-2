@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import ConfirmModal from "../../components/confirmModal/ConfirmModal";
 import { useCreateBlog } from "../../hooks";
+import { useGetAuthors } from "../../hooks/authors/useGetAuthors";
+import { toast } from "react-toastify";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./AddBlog.css";
@@ -20,30 +23,39 @@ const AddBlog = () => {
     const [blog, setBlog] = useState(initBlogValue);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { createBlog, cleanError, error, loading, response } = useCreateBlog();
+    const { createBlog, cleanError, error, loading, data } = useCreateBlog();
+    const { data: authors, error: authorsError, getAuthors, loading: authorsLoading } = useGetAuthors();
+
+    useEffect(() => {
+        getAuthors();
+    }, []);
+
+    useEffect(() => {
+        if (!authorsLoading && authorsError) {
+            toast.error("Error al obtener los autores.");
+        }
+        if (authors?.length > 0) {
+            setBlog(prevState => ({
+                ...prevState,
+                author: authors[0],
+            }));
+        }
+    }, [authors, authorsError, authorsLoading]);
 
     useEffect(() => {
         if (loading) return;
-        if (!error && response?.data) {
+        if (!error && data) {
             handleCloseModal();
             setBlog(initBlogValue);
+            toast.success("Se creó con éxito el nuevo blog.");
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [error, loading, response]);
-
-    // useEffect(() => {
-    //     return () => {
-    //         if (blog.urlToImage) {
-    //             URL.revokeObjectURL(blog.urlToImage);
-    //         }
-    //     };
-    // }, [blog.urlToImage]);
+    }, [error, loading, data]);
 
     const isBtnDisabled = !(blog.author && blog.title && blog.description);
 
     const handleCloseModal = () => {
         cleanError();
-        setIsModalOpen(false)
+        setIsModalOpen(false);
     }
 
     const handleChange = (value, type) => {
@@ -93,13 +105,15 @@ const AddBlog = () => {
             <div className="form-container">
                 <form onSubmit={handleSubmit} className="form-blog">
                     <label htmlFor="" className="label-blog">Autor</label>
-                    <input
+                    <select
                         className="input-blog"
-                        type="text"
-                        value={blog.autor}
+                        value={blog.author}
                         onChange={(event) => handleChange(event.target.value, 'author')}
-                        placeholder="Ingrese nombre de autor"
-                    />
+                    >
+                        {authors?.length > 0 && authors?.map((author) => {
+                            return <option value={author._id} key={author._id}>{author.name}</option>
+                        })}
+                    </select>
                     <label htmlFor="" className="label-blog">Titulo</label>
                     <input
                         className="input-blog"
@@ -112,7 +126,7 @@ const AddBlog = () => {
                     <DatePicker
                         className="input-blog"
                         selected={blog.createdDate}
-                        onChange={(date) => handleChange(date, 'date')}
+                        onChange={(date) => handleChange(date, 'createdDate')}
                         dateFormat={'dd/MM/YYYY'}
                     />
                     <label htmlFor="" className="label-blog">Descripción</label>
@@ -131,16 +145,7 @@ const AddBlog = () => {
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
-                        value={blog.image || ''}
                     />
-                    {blog.urlToImage && (
-                        <button
-                            className="clear-image-button"
-                            onClick={handleClearImage}
-                        >
-                            ✕
-                        </button>
-                    )}
                     {blog.urlToImage && (
                         <div className="image-preview-container">
                             <p className="label-blog">Vista previa de la imagen:</p>
@@ -148,6 +153,7 @@ const AddBlog = () => {
                                 className="image-preview"
                                 src={blog.urlToImage}
                                 alt="Vista previa"
+                                onClick={handleClearImage}
                             />
                         </div>
                     )}
