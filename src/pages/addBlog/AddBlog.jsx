@@ -37,7 +37,7 @@ const AddBlog = () => {
         if (authors?.length > 0) {
             setBlog(prevState => ({
                 ...prevState,
-                author: authors[0],
+                author: authors[0]._id,
             }));
         }
     }, [authors, authorsError, authorsLoading]);

@@ -14,18 +14,18 @@ const ConfirmModal = ({ isOpen, errorMsg, onClose, onConfirm, message, loading }
                 )}
                 <div className="modal-buttons">
                     <button
-                        className="confirm-button"
-                        onClick={onConfirm}
-                        disabled={loading}
-                    >
-                        {loading ? 'Cargando...' : 'Confirmar'}
-                    </button>
-                    <button
                         className="cancel-button"
                         onClick={onClose}
                         disabled={loading}
                     >
                         Cancelar
+                    </button>
+                    <button
+                        className="confirm-button"
+                        onClick={onConfirm}
+                        disabled={loading}
+                    >
+                        {loading ? 'Cargando...' : 'Confirmar'}
                     </button>
                 </div>
             </div>

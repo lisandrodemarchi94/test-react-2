@@ -23,7 +23,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 
-const { ADD_BLOG, AUTHORS, BLOGS, HOME, LOGIN, UNAUTHORIZED, NOT_FOUND, LOGOUT } = ROUTES;
+const { ADD_BLOG, AUTHORS, BLOGS, LOGIN, UNAUTHORIZED, NOT_FOUND, LOGOUT } = ROUTES;
 
 function App() {
   return (
@@ -54,7 +54,6 @@ function AppContent() {
           </Route>
 
           <Route element={<PrivateRoute />}>
-            <Route path={HOME} element={<>Bienvenidos!</>} />
             <Route path={BLOGS} element={<BlogsPage />} />
             <Route path={ADD_BLOG} element={<AddBlog />} />
             <Route path={LOGOUT} element={<LogoutPage />} />

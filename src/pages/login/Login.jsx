@@ -31,7 +31,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button onClick={handleLogin} disabled={loginStateLoading}>
+                <button onClick={handleLogin} disabled={loginStateLoading} className='login-btn'>
                     {loginStateLoading ? 'Cargando...' : 'Iniciar sesión'}
                 </button>
                 {loginStateError && (

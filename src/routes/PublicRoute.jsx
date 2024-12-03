@@ -5,7 +5,7 @@ import ROUTES from '../consts/routes';
 const PublicRoute = () => {
   const { token } = useAuth();
 
-  return token ? <Navigate to={ROUTES.HOME} /> : <Outlet />;
+  return token ? <Navigate to={ROUTES.BLOGS} /> : <Outlet />;
 };
 
 export default PublicRoute;
