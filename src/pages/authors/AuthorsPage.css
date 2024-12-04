@@ -2,6 +2,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.add-btn {
+  margin: 8px 0 8px 8px;
+  padding: 8px;
+  background-color: #04aa6d;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.add-btn:hover {
+  background-color: #15df95;
+}
+
+.add-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
 }
 
 h1 {
@@ -13,7 +34,6 @@ h1 {
 table {
   width: 95%;
   border-collapse: collapse;
-  margin-top: 20px;
   background-color: #f9f9f9;
   border-radius: 5px;
   overflow: hidden;
@@ -67,7 +87,7 @@ td:last-child {
   text-align: center;
 }
 
-.material-icons {
+.action-btn {
   cursor: pointer;
   font-size: 15px;
   margin-right: 5px;
