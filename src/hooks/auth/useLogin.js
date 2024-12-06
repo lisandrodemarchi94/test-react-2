@@ -20,9 +20,9 @@ export const useLogin = () => {
       });
       const response = await axiosInstance.post(urlLogin, { email, password });
       if (response.status === 200) {
-        const { token } = response.data;
-        const decodedToken = jwtDecode(token);
-        login(token, decodedToken?.role);
+        const { accessToken } = response.data;
+        const decodedToken = jwtDecode(accessToken);
+        login(accessToken, decodedToken?.role);
       } else {
         setLoginState({
           error: null,
