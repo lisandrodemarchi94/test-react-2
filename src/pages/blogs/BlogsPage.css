@@ -1,3 +1,28 @@
+.search-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 0 20px;
+  display: flex;
+}
+
+.search-input {
+  width: 95%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  font-size: 12px;
+}
+
+.search-btn {
+  width: 5%;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-left: 0;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
 .blogs-list {
   display: flex;
   flex-direction: column;
