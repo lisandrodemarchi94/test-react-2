@@ -1,5 +1,6 @@
 import {
   BrowserRouter,
+  Navigate,
   Route,
   Routes,
 } from "react-router-dom";
@@ -63,6 +64,7 @@ function AppContent() {
             <Route path={AUTHORS} element={<AuthorsPage />} />
           </Route>
 
+          <Route path="/" element={<Navigate to={isLogged ? BLOGS : LOGIN} replace />} />
           <Route path={UNAUTHORIZED} element={<Unauthorized />} />
           <Route path={NOT_FOUND} element={<NotFoundPage />} />
 

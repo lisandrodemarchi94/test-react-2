@@ -5,7 +5,7 @@ const ROUTES = {
   AUTHORS: "/authors",
   BLOGS: "/blogs",
   UNAUTHORIZED: "/unauthorized",
-  NOT_FOUND: "*",
+  NOT_FOUND: "/not-found",
   LOGOUT: "/logout",
 };
 
